@@ -8,6 +8,7 @@
 #define E        0
 #define LCD_PORT PORTC
 #define LCD_DDR  DDRC
+#define LCD_PIN  PINC
 #define DB4      0
 #define DB5      1
 #define DB6      2
@@ -40,6 +41,8 @@
 void lcd_epulse(void);
 
 void lcd_send(int data, int rs);
+
+int lcd_read(void);
 
 void lcd_putc(char c);
 
