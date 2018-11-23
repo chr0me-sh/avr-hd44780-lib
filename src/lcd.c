@@ -18,9 +18,9 @@ void lcd_send(int data, int rs) {
 	lcd_epulse();
 }
 
-void lcd_puts(char c) {
+void lcd_putc(char c) {
 	if(c == '\n' || c == '\r') {
-		lcd_cmd(0xC0);
+		lcd_cmd(LCD_LINE_2);
 	} else {
 		lcd_char(c);
 	}

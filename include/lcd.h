@@ -39,6 +39,6 @@ void lcd_epulse(void);
 
 void lcd_send(int data, int rs);
 
-void lcd_puts(char c);
+void lcd_putc(char c);
 
 void lcd_init(void);

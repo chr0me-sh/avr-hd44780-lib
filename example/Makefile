@@ -9,6 +9,8 @@ DEV = usb
 CC = avr-gcc
 CFLAGS = -mmcu=$(MMC) -Wall -Os
 CPPFLAGS = -D F_CPU=$(F_CPU)
+LDFLAGS = -L../lib -llcd
+INCLUDES = -I../include
 
 OC = avr-objcopy
 OFLAGS = -j .data -j .text -O ihex
@@ -23,7 +25,7 @@ all: flash
 compile: $(NAME).hex
 
 %.elf: %.c
-	$(CC) $< $(CFLAGS) -L. -llcd $(CPPFLAGS) -o $@
+	$(CC) $< $(CFLAGS) $(INCLUDES) $(LDFLAGS) $(CPPFLAGS) -o $@
 
 %.hex: %.elf
 	$(OC) $(OFLAGS) $< $@
