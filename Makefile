@@ -8,9 +8,9 @@ INCLUDES = -Iinclude
 
 compile: lib/liblcd.a
 
-lib/liblcd.a: obj/lcd.o
+lib/liblcd.a: obj/lcd_basic.o
 	avr-ar rcs $@ $<
 
-obj/lcd.o: src/lcd.c
+obj/lcd_basic.o: src/lcd_basic.c
 	$(CC) $(CFLAGS) $(INCLUDES) $(CPPFLAGS) $< -o $@
 
