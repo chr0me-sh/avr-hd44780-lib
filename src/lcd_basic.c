@@ -25,9 +25,14 @@ void lcd_send(int data, int rs) {
 	lcd_epulse();
 }
 
+void lcd_newline(void) {
+	if(lcd_read() > 0x40) lcd_cmd(0x02);
+	else lcd_cmd(0xC0);
+}
+
 void lcd_putc(char c) {
 	if(c == '\n' || c == '\r') {
-		lcd_cmd(LCD_LINE_2);
+		lcd_newline();
 	} else {
 		lcd_char(c);
 	}
@@ -38,7 +43,6 @@ void lcd_init(void) {
 	lcd_cmd(0x28);
 	lcd_cmd(0x0C);
 	lcd_cmd(0x0E);
-	_delay_ms(15);
 	lcd_cmd(0x01);
 	_delay_ms(15);
 }

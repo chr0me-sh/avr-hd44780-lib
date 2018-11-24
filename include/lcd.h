@@ -30,7 +30,7 @@
 #define lcd_e_delay()  _delay_us(E_PULSE_TIME)
 
 /* Magic numbers */
-#define E_PULSE_TIME 250
+#define E_PULSE_TIME  250
 #define LCD_LINE_1    0x80
 #define LCD_LINE_2    0xC0
 
@@ -44,6 +44,10 @@ void lcd_send(int data, int rs);
 
 int lcd_read(void);
 
+void lcd_newline(void);
+
 void lcd_putc(char c);
+
+void lcd_puts(char* s);
 
 void lcd_init(void);
