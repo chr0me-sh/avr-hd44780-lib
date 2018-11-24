@@ -23,6 +23,8 @@ void lcd_send(int data, int rs) {
 
 	LCD_PORT = cmd | (data & 0x0F);
 	lcd_epulse();
+
+	_delay_ms(1);
 }
 
 void lcd_newline(void) {
@@ -39,10 +41,26 @@ void lcd_putc(char c) {
 }
 
 void lcd_init(void) {
-	lcd_cmd(0x20);
+	_delay_ms(120);
+
+	LCD_PORT = 0x03;
+	lcd_epulse();
+	_delay_ms(6);
+
+	lcd_epulse();
+	_delay_ms(2);
+
+	lcd_epulse();
+	_delay_ms(2);
+
+	LCD_PORT = 0x02;
+	lcd_epulse();
+	_delay_ms(2);
+
 	lcd_cmd(0x28);
-	lcd_cmd(0x0C);
-	lcd_cmd(0x0E);
+	lcd_cmd(0x08);
 	lcd_cmd(0x01);
-	_delay_ms(15);
+	_delay_ms(2);
+	lcd_cmd(0x0E);
+	lcd_cmd(0x0C);
 }
