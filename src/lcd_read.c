@@ -4,7 +4,6 @@
 #include "lcd.h"
 
 int lcd_read(void) {
-	LCD_PORT = 0x00;
 	LCD_DDR = 0xF0;
 	lcd_rw_on();
 
@@ -22,7 +21,7 @@ int lcd_read(void) {
 	reg |= (PINC & 0x0F);
 	lcd_e_off();
 
-	LCD_PORT = 0x00;
+	lcd_rw_off();
 	LCD_DDR = 0xFF;
 	return reg;
 }
