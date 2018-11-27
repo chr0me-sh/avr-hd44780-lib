@@ -3,6 +3,10 @@
 #include <util/delay.h>
 #include "lcd.h"
 
+void lcd_io_init(void) { /* Need to remake this so it can be used in any pin setup */
+	LCD_DDR = ((1<<DB4)|(1<<DB5)|(1<<DB6)|(1<<DB7)|(1<<RW)|(1<<RS));
+	E_DDR = (1<<E);
+}
 void lcd_epulse(void) {
 	lcd_e_on();
 	lcd_e_delay();
@@ -16,7 +20,7 @@ void lcd_send(int data, int rs) {
 		lcd_rs_off();
 	}
 
-	int cmd = LCD_PORT & 0xF0;
+	int cmd = LCD_PORT & 0xF0; /* Saving the state of the first 4 pins */
 
 	LCD_PORT = cmd | ((data>>4) & 0x0F);
 	lcd_epulse();
@@ -26,14 +30,14 @@ void lcd_send(int data, int rs) {
 }
 
 void lcd_newline(void) {
-	if(lcd_read() > 0x40) lcd_cmd(LCD_HOME);
+	if(lcd_read() > 0x40) lcd_cmd(LCD_HOME); /* If on line 2, move line 1, if on line 2, go home */
 	else lcd_cmd(LCD_LINE_2);
 }
 
 void lcd_putc(char c) {
-	if(c == '\n' || c == '\r') {
-		lcd_newline();
-	} else {
+	if(c == '\n' || c == '\r') { /* Goes to the other line when recieving a newline or car. return */
+		lcd_newline();           /* carriage return is included due to terminal behaviour          */
+	} else {                     /* may need to be changed later...                                */
 		lcd_char(c);
 	}
 }
