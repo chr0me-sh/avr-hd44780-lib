@@ -23,13 +23,11 @@ void lcd_send(int data, int rs) {
 
 	LCD_PORT = cmd | (data & 0x0F);
 	lcd_epulse();
-
-	_delay_ms(1);
 }
 
 void lcd_newline(void) {
-	if(lcd_read() > 0x40) lcd_cmd(0x02);
-	else lcd_cmd(0xC0);
+	if(lcd_read() > 0x40) lcd_cmd(LCD_HOME);
+	else lcd_cmd(LCD_LINE_2);
 }
 
 void lcd_putc(char c) {
@@ -41,9 +39,9 @@ void lcd_putc(char c) {
 }
 
 void lcd_init(void) {
-	_delay_ms(120);
+	_delay_ms(120);        /* Power on delay */
 
-	LCD_PORT = 0x03;
+	LCD_PORT = 0x03;       /* Function set */
 	lcd_epulse();
 	_delay_ms(6);
 
@@ -53,14 +51,16 @@ void lcd_init(void) {
 	lcd_epulse();
 	_delay_ms(2);
 
-	LCD_PORT = 0x02;
+	LCD_PORT = 0x02;       /* Set to 4-bit */
 	lcd_epulse();
 	_delay_ms(2);
 
-	lcd_cmd(0x28);
-	lcd_cmd(0x08);
-	lcd_cmd(0x01);
+	lcd_cmd(0x28);         /* Set 2-line display */
+	lcd_cmd(0x08);         /* Display off */
+
+	lcd_cmd(LCD_CLEAR);
 	_delay_ms(2);
-	lcd_cmd(0x0E);
-	lcd_cmd(0x0C);
+
+	lcd_cmd(0x06);        /* Entry mode set (increment) */
+	lcd_cmd(0x0C);        /* Display on, no cursor */
 }

@@ -17,8 +17,13 @@
 #define RS       5
 
 /* Commands */
-#define lcd_cmd(x)     lcd_send(x, 0)
-#define lcd_char(x)    lcd_send(x, 1)
+#define lcd_cmd(x)  lcd_send(x, 0)
+#define lcd_char(x) lcd_send(x, 1)
+
+#define LCD_CLEAR   0x01
+#define LCD_HOME    0x02
+#define LCD_LINE_1  0x80
+#define LCD_LINE_2  0xC0
 
 /* Bit switch shortcuts */
 #define lcd_rs_on()    LCD_PORT |= (1 << RS)
