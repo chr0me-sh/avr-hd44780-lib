@@ -56,3 +56,5 @@ void lcd_putc(char c);
 void lcd_puts(char* s);
 
 void lcd_init(void);
+
+void lcd_io_init(void);
