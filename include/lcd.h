@@ -6,15 +6,22 @@
 #define E_PORT   PORTB
 #define E_DDR    DDRB
 #define E        0
-#define LCD_PORT PORTC
-#define LCD_DDR  DDRC
-#define LCD_PIN  PINC
+
+#define RS_PORT  PORTB
+#define RS_DDR   DDRB
+#define RS       1
+
+#define RW_PORT  PORTB
+#define RW_DDR   DDRB
+#define RW       2
+
+#define DATA_PORT PORTC
+#define DATA_DDR  DDRC
+#define DATA_PIN  PINC
 #define DB4      0
 #define DB5      1
 #define DB6      2
 #define DB7      3
-#define RW       4
-#define RS       5
 
 /* Commands */
 #define lcd_cmd(x)  lcd_send(x, 0)
@@ -26,12 +33,12 @@
 #define LCD_LINE_2  0xC0
 
 /* Bit switch shortcuts */
-#define lcd_rs_on()    LCD_PORT |= (1 << RS)
-#define lcd_rs_off()   LCD_PORT &= ~(1 <<RS)
-#define lcd_rw_on()    LCD_PORT |= (1 << RW)
-#define lcd_rw_off()   LCD_PORT &= ~(1 << RW)
-#define lcd_e_on()     E_PORT |= (1 << E)
-#define lcd_e_off()    E_PORT &= ~(1 << E)
+#define lcd_rs_on()    RS_PORT |=  (1 << RS)
+#define lcd_rs_off()   RS_PORT &= ~(1 << RS)
+#define lcd_rw_on()    RW_PORT |=  (1 << RW)
+#define lcd_rw_off()   RW_PORT &= ~(1 << RW)
+#define lcd_e_on()     E_PORT  |=  (1 << E)
+#define lcd_e_off()    E_PORT  &= ~(1 << E)
 #define lcd_e_delay()  _delay_us(E_PULSE_TIME)
 
 /* Magic numbers */

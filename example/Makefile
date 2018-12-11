@@ -2,7 +2,7 @@ SRC = $(wildcard *.c)
 NAME = $(basename $(SRC))
 
 MMC = atmega328p
-F_CPU = 1000000L
+F_CPU = 16000000L
 PRG = usbasp
 DEV = usb
 
@@ -19,6 +19,7 @@ FL = avrdude
 FFLAGS = -c $(PRG) -p $(MMC) -P $(DEV) -e
 
 .PHONY: clean flash compile all
+.INTERMEDIATE: $(NAME).hex
 
 all: flash
 

@@ -1,5 +1,5 @@
 MMC = atmega328p
-F_CPU = 1000000L
+F_CPU = 16000000L
 
 CC = avr-gcc
 CFLAGS = -mmcu=$(MMC) -Wall -Os -c

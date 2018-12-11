@@ -4,8 +4,10 @@
 #include "lcd.h"
 
 void lcd_io_init(void) { /* Need to remake this so it can be used in any pin setup */
-	LCD_DDR = ((1<<DB4)|(1<<DB5)|(1<<DB6)|(1<<DB7)|(1<<RW)|(1<<RS));
-	E_DDR = (1<<E);
+	DATA_DDR |= ((1<<DB4)|(1<<DB5)|(1<<DB6)|(1<<DB7));
+	RS_DDR   |= (1<<RS);
+	RW_DDR   |= (1<<RW);
+	E_DDR    |= (1<<E);
 }
 void lcd_epulse(void) {
 	lcd_e_on();
@@ -20,12 +22,10 @@ void lcd_send(int data, int rs) {
 		lcd_rs_off();
 	}
 
-	int cmd = LCD_PORT & 0xF0; /* Saving the state of the first 4 pins */
-
-	LCD_PORT = cmd | ((data>>4) & 0x0F);
+	DATA_PORT = ((data>>4) & 0x0F);
 	lcd_epulse();
 
-	LCD_PORT = cmd | (data & 0x0F);
+	DATA_PORT = (data & 0x0F);
 	lcd_epulse();
 }
 
@@ -45,7 +45,7 @@ void lcd_putc(char c) {
 void lcd_init(void) {
 	_delay_ms(120);        /* Power on delay */
 
-	LCD_PORT = 0x03;       /* Function set */
+	DATA_PORT = 0x03;       /* Function set */
 	lcd_epulse();
 	_delay_ms(6);
 
@@ -55,7 +55,7 @@ void lcd_init(void) {
 	lcd_epulse();
 	_delay_ms(2);
 
-	LCD_PORT = 0x02;       /* Set to 4-bit */
+	DATA_PORT = 0x02;       /* Set to 4-bit */
 	lcd_epulse();
 	_delay_ms(2);
 
